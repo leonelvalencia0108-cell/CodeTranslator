@@ -2,7 +2,7 @@
 <html lang="es" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CodeTranslator | AI Services</title>
     <!-- Fuentes de Google: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -105,123 +105,125 @@
         select option { background-color: #18181b; color: #fff; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 font-sans tracking-tight relative overflow-x-hidden selection:bg-indigo-500/30">
+<body class="min-h-screen flex flex-col items-center justify-start sm:justify-center p-3 sm:p-6 lg:p-8 2xl:p-12 font-sans tracking-tight relative overflow-x-hidden selection:bg-indigo-500/30">
 
     <!-- Efecto Aurora de Fondo -->
     <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-indigo-600/20 mix-blend-screen filter blur-[100px] opacity-70 animate-blob"></div>
-        <div class="absolute top-[20%] right-[-10%] w-[400px] h-[400px] rounded-full bg-purple-600/20 mix-blend-screen filter blur-[100px] opacity-60 animate-blob" style="animation-delay: 2s;"></div>
-        <div class="absolute bottom-[-20%] left-[20%] w-[600px] h-[600px] rounded-full bg-blue-600/10 mix-blend-screen filter blur-[120px] opacity-50 animate-blob" style="animation-delay: 4s;"></div>
+        <div class="absolute top-[-10%] left-[-10%] w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] rounded-full bg-indigo-600/20 mix-blend-screen filter blur-[80px] sm:blur-[100px] opacity-70 animate-blob"></div>
+        <div class="absolute top-[20%] right-[-10%] w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] rounded-full bg-purple-600/20 mix-blend-screen filter blur-[80px] sm:blur-[100px] opacity-60 animate-blob" style="animation-delay: 2s;"></div>
+        <div class="absolute bottom-[-20%] left-[20%] w-[400px] sm:w-[600px] h-[400px] sm:h-[600px] rounded-full bg-blue-600/10 mix-blend-screen filter blur-[100px] sm:blur-[120px] opacity-50 animate-blob" style="animation-delay: 4s;"></div>
         <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wMykiLz48L3N2Zz4=')] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_80%)]"></div>
     </div>
 
-    <!-- Botón de Usuario (Top Left) -->
-    <div class="absolute top-6 left-6 lg:left-8 z-20">
-        <button id="btn-user-auth" class="flex items-center gap-2 text-zinc-300 bg-white/5 px-4 py-2 rounded-full border border-white/10 text-xs font-medium tracking-wide shadow-sm backdrop-blur-md hover:bg-white/10 transition-all group">
-            <i id="user-auth-icon" data-lucide="user" class="w-3.5 h-3.5 text-indigo-400 group-hover:scale-110 transition-transform"></i>
+    <!-- Top Navigation Header -->
+    <header class="w-full max-w-5xl 2xl:max-w-7xl flex flex-col-reverse sm:flex-row justify-between items-center gap-4 mb-4 sm:mb-8 relative z-20 animate-fade-in-up mt-2 sm:mt-0">
+        <button id="btn-user-auth" class="flex items-center justify-center sm:justify-start gap-2 text-zinc-300 bg-white/5 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/10 text-xs sm:text-sm font-medium tracking-wide shadow-sm hover:bg-white/10 transition-all group w-full sm:w-auto">
+            <i id="user-auth-icon" data-lucide="user" class="w-4 h-4 text-indigo-400 group-hover:scale-110 transition-transform"></i>
             <span id="user-auth-text">Iniciar Sesión</span>
         </button>
-    </div>
+        <div class="flex items-center justify-center gap-2 text-zinc-300 bg-zinc-900/50 px-4 py-2 rounded-full border border-white/10 text-[10px] sm:text-xs font-semibold tracking-[0.2em] uppercase shadow-sm backdrop-blur-md w-full sm:w-auto">
+            <i data-lucide="cpu" class="w-3.5 h-3.5 text-indigo-400"></i>
+            CodeCompany Services
+        </div>
+    </header>
 
-    <!-- Contenedor Principal -->
-    <div class="max-w-5xl w-full glass-panel rounded-[2rem] overflow-hidden relative z-10 animate-fade-in-up flex flex-col mt-12 md:mt-0">
+    <!-- Contenedor Principal (Panel) -->
+    <main class="max-w-5xl 2xl:max-w-7xl w-full glass-panel rounded-3xl sm:rounded-[2rem] overflow-hidden relative z-10 animate-fade-in-up flex flex-col flex-grow sm:flex-grow-0">
         
-        <!-- Encabezado Premium -->
-        <div class="relative p-8 md:p-10 flex flex-col items-center justify-center border-b border-white/5 overflow-hidden">
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-32 bg-indigo-500/20 blur-[50px] rounded-full pointer-events-none"></div>
+        <!-- Encabezado del Traductor -->
+        <div class="relative p-6 sm:p-8 md:p-10 flex flex-col items-center justify-center border-b border-white/5 overflow-hidden">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 sm:w-64 h-24 sm:h-32 bg-indigo-500/20 blur-[50px] rounded-full pointer-events-none"></div>
 
-            <div class="absolute top-6 right-6 lg:right-8 flex items-center gap-2 text-zinc-300 bg-white/5 px-4 py-1.5 rounded-full border border-white/10 text-[10px] font-semibold tracking-[0.2em] uppercase shadow-sm backdrop-blur-md">
-                <i data-lucide="cpu" class="w-3.5 h-3.5 text-indigo-400"></i>
-                CodeCompany Services
-            </div>
-
-            <h1 class="text-3xl md:text-4xl font-semibold flex items-center justify-center gap-3 tracking-tight mt-6 text-white relative z-10">
-                <div class="p-2 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-xl border border-white/10 shadow-inner">
-                    <i data-lucide="sparkles" class="w-6 h-6 text-indigo-400"></i>
+            <h1 class="text-2xl sm:text-3xl md:text-4xl 2xl:text-5xl font-semibold flex items-center justify-center gap-2 sm:gap-3 tracking-tight mt-2 sm:mt-4 text-white relative z-10 text-center">
+                <div class="p-1.5 sm:p-2 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-xl border border-white/10 shadow-inner">
+                    <i data-lucide="sparkles" class="w-5 h-5 sm:w-6 sm:h-6 text-indigo-400"></i>
                 </div>
                 CodeTranslator
             </h1>
-            <p class="text-zinc-400 mt-4 text-sm font-light tracking-wide max-w-lg text-center relative z-10">
+            <p class="text-zinc-400 mt-3 sm:mt-4 text-xs sm:text-sm 2xl:text-base font-light tracking-wide max-w-lg 2xl:max-w-2xl text-center relative z-10 px-2">
                 Traducción neuronal y análisis de contexto gramatical en tiempo real.
             </p>
         </div>
 
-        <div class="p-6 md:p-10 flex flex-col gap-8 relative z-20 flex-grow">
+        <div class="p-4 sm:p-6 md:p-10 flex flex-col gap-6 sm:gap-8 relative z-20 flex-grow">
+            
             <!-- Controles de Idioma -->
-            <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-white/5 pb-8">
-                <div class="w-full md:w-5/12 relative group">
-                    <select id="sourceLang" class="w-full bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-2xl px-5 py-4 text-zinc-200 font-medium focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all cursor-pointer hover:bg-zinc-800/50"></select>
-                    <i data-lucide="chevron-down" class="w-4 h-4 absolute right-5 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none group-hover:text-zinc-300 transition-colors"></i>
+            <div class="flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 border-b border-white/5 pb-6 sm:pb-8">
+                <div class="w-full md:w-[45%] relative group">
+                    <select id="sourceLang" class="w-full bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-xl sm:rounded-2xl px-4 sm:px-5 py-3.5 sm:py-4 text-sm sm:text-base text-zinc-200 font-medium focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all cursor-pointer hover:bg-zinc-800/50"></select>
+                    <i data-lucide="chevron-down" class="w-4 h-4 absolute right-4 sm:right-5 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none group-hover:text-zinc-300 transition-colors"></i>
                 </div>
 
-                <button id="swapBtn" class="bg-zinc-800 p-3.5 rounded-full border border-white/5 text-zinc-400 hover:text-white hover:border-white/20 hover:bg-zinc-700 shadow-lg transition-all duration-300 active:scale-95 group z-10" title="Intercambiar idiomas">
-                    <i data-lucide="arrow-right-left" class="w-5 h-5 md:rotate-0 rotate-90 transition-transform duration-500 group-hover:scale-110"></i>
+                <button id="swapBtn" class="bg-zinc-800 p-3 sm:p-3.5 rounded-full border border-white/5 text-zinc-400 hover:text-white hover:border-white/20 hover:bg-zinc-700 shadow-lg transition-all duration-300 active:scale-95 group z-10 md:rotate-0 rotate-90 shrink-0" title="Intercambiar idiomas">
+                    <i data-lucide="arrow-right-left" class="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-500 group-hover:scale-110"></i>
                 </button>
 
-                <div class="w-full md:w-5/12 relative group">
-                    <select id="targetLang" class="w-full bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-2xl px-5 py-4 text-zinc-200 font-medium focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all cursor-pointer hover:bg-zinc-800/50"></select>
-                    <i data-lucide="chevron-down" class="w-4 h-4 absolute right-5 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none group-hover:text-zinc-300 transition-colors"></i>
+                <div class="w-full md:w-[45%] relative group">
+                    <select id="targetLang" class="w-full bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-xl sm:rounded-2xl px-4 sm:px-5 py-3.5 sm:py-4 text-sm sm:text-base text-zinc-200 font-medium focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all cursor-pointer hover:bg-zinc-800/50"></select>
+                    <i data-lucide="chevron-down" class="w-4 h-4 absolute right-4 sm:right-5 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none group-hover:text-zinc-300 transition-colors"></i>
                 </div>
             </div>
 
             <!-- Áreas de Texto -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 relative">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 relative">
+                <!-- Separador visual (solo PC) -->
                 <div class="hidden md:block absolute left-1/2 top-4 bottom-4 w-[1px] bg-gradient-to-b from-transparent via-white/10 to-transparent -translate-x-1/2 pointer-events-none"></div>
 
                 <!-- Área de Origen -->
                 <div class="relative group h-full">
-                    <textarea id="sourceText" rows="7" class="w-full h-full textarea-glass rounded-3xl p-6 md:p-8 text-lg md:text-xl focus:outline-none focus:ring-1 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all duration-300 placeholder:text-zinc-600 leading-relaxed text-zinc-100" placeholder="Escribe o dicta tu texto aquí..."></textarea>
+                    <textarea id="sourceText" class="w-full h-40 sm:h-56 md:h-64 2xl:h-80 textarea-glass rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-8 text-base sm:text-lg md:text-xl 2xl:text-2xl focus:outline-none focus:ring-1 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all duration-300 placeholder:text-zinc-600 leading-relaxed text-zinc-100" placeholder="Escribe o dicta tu texto aquí..."></textarea>
                     
-                    <button id="clearBtn" class="absolute top-6 right-6 text-zinc-500 hover:text-white hover:bg-white/10 p-1.5 rounded-lg transition-all hidden" title="Limpiar texto">
-                        <i data-lucide="x" class="w-5 h-5"></i>
+                    <button id="clearBtn" class="absolute top-4 sm:top-6 right-4 sm:right-6 text-zinc-500 hover:text-white hover:bg-white/10 p-1 sm:p-1.5 rounded-lg transition-all hidden" title="Limpiar texto">
+                        <i data-lucide="x" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                     </button>
                     
-                    <div class="absolute bottom-6 right-6 flex items-center gap-3">
-                        <span class="text-xs text-zinc-500 font-medium mr-2 tracking-wide"><span id="charCount">0</span> ch</span>
+                    <div class="absolute bottom-4 sm:bottom-6 right-4 sm:right-6 flex items-center gap-2 sm:gap-3">
+                        <span class="text-[10px] sm:text-xs text-zinc-500 font-medium mr-1 sm:mr-2 tracking-wide"><span id="charCount">0</span> ch</span>
                         
-                        <button id="liveBtn" class="bg-zinc-800/80 backdrop-blur p-3 rounded-xl shadow-lg border border-white/5 text-zinc-400 hover:text-white hover:border-indigo-500/50 hover:shadow-indigo-500/20 transition-all duration-300 focus:outline-none flex items-center gap-2" title="Intérprete IA en Vivo">
-                            <i id="liveIcon" data-lucide="radio" class="w-4 h-4 transition-colors"></i>
-                            <span id="liveText" class="text-xs font-semibold hidden sm:block tracking-wide">Vivo</span>
+                        <button id="liveBtn" class="bg-zinc-800/80 backdrop-blur p-2.5 sm:p-3 rounded-xl shadow-lg border border-white/5 text-zinc-400 hover:text-white hover:border-indigo-500/50 hover:shadow-indigo-500/20 transition-all duration-300 focus:outline-none flex items-center gap-2" title="Intérprete IA en Vivo">
+                            <i id="liveIcon" data-lucide="radio" class="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors"></i>
+                            <span id="liveText" class="text-[10px] sm:text-xs font-semibold hidden sm:block tracking-wide">Vivo</span>
                         </button>
 
-                        <button id="micBtn" class="bg-zinc-800/80 backdrop-blur p-3 rounded-xl shadow-lg border border-white/5 text-zinc-400 hover:text-white hover:border-indigo-500/50 hover:shadow-indigo-500/20 transition-all duration-300 focus:outline-none" title="Dictar por voz">
-                            <i id="micIcon" data-lucide="mic" class="w-4 h-4 transition-colors"></i>
+                        <button id="micBtn" class="bg-zinc-800/80 backdrop-blur p-2.5 sm:p-3 rounded-xl shadow-lg border border-white/5 text-zinc-400 hover:text-white hover:border-indigo-500/50 hover:shadow-indigo-500/20 transition-all duration-300 focus:outline-none" title="Dictar por voz">
+                            <i id="micIcon" data-lucide="mic" class="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors"></i>
                         </button>
                     </div>
                 </div>
 
                 <!-- Área de Destino -->
                 <div class="relative group h-full">
-                    <div class="absolute inset-0 bg-zinc-950/40 rounded-3xl pointer-events-none border border-white/5"></div>
-                    <textarea id="targetText" rows="7" readonly class="w-full h-full bg-transparent border border-transparent rounded-3xl p-6 md:p-8 text-lg md:text-xl text-zinc-300 placeholder:text-zinc-600 focus:outline-none leading-relaxed relative z-10" placeholder="La traducción aparecerá aquí..."></textarea>
+                    <div class="absolute inset-0 bg-zinc-950/40 rounded-2xl sm:rounded-3xl pointer-events-none border border-white/5"></div>
                     
-                    <div class="absolute bottom-6 right-6 flex gap-2 z-20">
-                        <button id="speakBtn" class="bg-zinc-800/80 backdrop-blur p-3 rounded-xl shadow-lg border border-white/5 text-zinc-400 hover:text-white hover:border-indigo-500/50 transition-all duration-300 opacity-0 pointer-events-none group-hover:opacity-100" title="Escuchar traducción">
-                            <i data-lucide="volume-2" class="w-4 h-4"></i>
+                    <textarea id="targetText" readonly class="w-full h-40 sm:h-56 md:h-64 2xl:h-80 bg-transparent border border-transparent rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-8 text-base sm:text-lg md:text-xl 2xl:text-2xl text-zinc-300 placeholder:text-zinc-600 focus:outline-none leading-relaxed relative z-10" placeholder="La traducción aparecerá aquí..."></textarea>
+                    
+                    <div class="absolute bottom-4 sm:bottom-6 right-4 sm:right-6 flex gap-2 z-20">
+                        <button id="speakBtn" class="bg-zinc-800/80 backdrop-blur p-2.5 sm:p-3 rounded-xl shadow-lg border border-white/5 text-zinc-400 hover:text-white hover:border-indigo-500/50 transition-all duration-300 sm:opacity-0 sm:pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto" title="Escuchar traducción">
+                            <i data-lucide="volume-2" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                         </button>
-                        <button id="copyBtn" class="bg-zinc-800/80 backdrop-blur p-3 rounded-xl shadow-lg border border-white/5 text-zinc-400 hover:text-white hover:border-indigo-500/50 transition-all duration-300 opacity-0 pointer-events-none group-hover:opacity-100" title="Copiar al portapapeles">
-                            <i data-lucide="copy" class="w-4 h-4"></i>
+                        <button id="copyBtn" class="bg-zinc-800/80 backdrop-blur p-2.5 sm:p-3 rounded-xl shadow-lg border border-white/5 text-zinc-400 hover:text-white hover:border-indigo-500/50 transition-all duration-300 sm:opacity-0 sm:pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto" title="Copiar al portapapeles">
+                            <i data-lucide="copy" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                         </button>
                     </div>
                 </div>
             </div>
 
             <!-- Botón de Traducción Holográfico -->
-            <div class="flex justify-center mt-6">
-                <button id="translateBtn" class="group relative overflow-hidden bg-white text-black font-semibold py-4 px-12 rounded-2xl shadow-[0_0_40px_rgba(255,255,255,0.1)] hover:shadow-[0_0_60px_rgba(99,102,241,0.3)] transition-all duration-500 hover:-translate-y-1 active:translate-y-0 flex items-center gap-3 text-lg w-full md:w-auto min-w-[280px] justify-center disabled:opacity-70 disabled:cursor-not-allowed">
+            <div class="flex justify-center mt-4 sm:mt-6 pb-2 sm:pb-0">
+                <button id="translateBtn" class="group relative overflow-hidden bg-white text-black font-semibold py-3.5 px-8 sm:py-4 sm:px-12 rounded-xl sm:rounded-2xl shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_50px_rgba(99,102,241,0.3)] transition-all duration-500 hover:-translate-y-1 active:translate-y-0 flex items-center gap-2 sm:gap-3 text-base sm:text-lg w-full sm:w-auto min-w-[240px] sm:min-w-[280px] justify-center disabled:opacity-70 disabled:cursor-not-allowed">
                     <div class="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
                     <span id="btnText" class="relative z-10">Traducir Ahora</span>
                     <div id="btnLoader" class="loader border-black border-t-black relative z-10 hidden"></div>
-                    <i id="btnIcon" data-lucide="arrow-right" class="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300"></i>
+                    <i id="btnIcon" data-lucide="arrow-right" class="w-4 h-4 sm:w-5 sm:h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300"></i>
                 </button>
             </div>
         </div>
-    </div>
+    </main>
 
     <!-- Footer -->
-    <footer class="max-w-5xl w-full mt-8 mb-4 flex flex-col md:flex-row items-center justify-between text-xs text-zinc-500 z-10 animate-fade-in-up" style="animation-delay: 0.2s;">
-        <p>&copy; 2026 CodeTranslator. Todos los derechos reservados.</p>
-        <div class="flex gap-6 mt-4 md:mt-0 font-medium">
+    <footer class="max-w-5xl 2xl:max-w-7xl w-full mt-6 sm:mt-8 mb-4 flex flex-col md:flex-row items-center justify-between text-[10px] sm:text-xs text-zinc-500 z-10 animate-fade-in-up gap-4 md:gap-0" style="animation-delay: 0.2s;">
+        <p class="text-center md:text-left">&copy; 2026 CodeTranslator. Todos los derechos reservados.</p>
+        <div class="flex flex-wrap justify-center gap-4 sm:gap-6 font-medium">
             <a href="#privacidad" id="btn-privacidad" class="hover:text-zinc-300 transition-colors duration-300">Privacidad</a>
             <a href="#terminos" id="btn-terminos" class="hover:text-zinc-300 transition-colors duration-300">Términos API</a>
             <a href="#contacto" id="btn-contacto" class="hover:text-zinc-300 transition-colors duration-300">Contacto</a>
@@ -229,57 +231,57 @@
     </footer>
 
     <!-- Modal de Login/Registro de Supabase -->
-    <div id="login-modal" class="fixed inset-0 z-[150] bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
-        <div id="login-container" class="glass-panel w-full max-w-md p-8 rounded-[2rem] border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] transform scale-95 opacity-0 transition-all duration-300">
+    <div id="login-modal" class="fixed inset-0 z-[150] bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
+        <div id="login-container" class="glass-panel w-full max-w-[95%] sm:max-w-md p-6 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] transform scale-95 opacity-0 transition-all duration-300 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-6">
-                <h2 id="auth-title" class="text-2xl font-semibold text-white tracking-tight">Acceso Code AI</h2>
-                <button id="close-login" class="text-zinc-400 hover:text-white p-1.5 rounded-lg hover:bg-white/10 transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
+                <h2 id="auth-title" class="text-xl sm:text-2xl font-semibold text-white tracking-tight">Acceso Code AI</h2>
+                <button id="close-login" class="text-zinc-400 hover:text-white p-1 sm:p-1.5 rounded-lg hover:bg-white/10 transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
             
             <form id="auth-form" class="space-y-4">
                 <div id="auth-name-group" class="hidden">
-                    <label class="block text-xs font-medium text-zinc-400 uppercase tracking-widest mb-2">Nombre</label>
-                    <input type="text" id="auth-name" class="w-full bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-2xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all placeholder:text-zinc-600" placeholder="Tu nombre completo">
+                    <label class="block text-[10px] sm:text-xs font-medium text-zinc-400 uppercase tracking-widest mb-1.5 sm:mb-2">Nombre</label>
+                    <input type="text" id="auth-name" class="w-full bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-xl sm:rounded-2xl px-4 py-3 sm:py-3 text-sm sm:text-base text-white focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all placeholder:text-zinc-600" placeholder="Tu nombre completo">
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-zinc-400 uppercase tracking-widest mb-2">Email</label>
-                    <input type="email" id="auth-email" class="w-full bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-2xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all placeholder:text-zinc-600" placeholder="tu@email.com" required>
+                    <label class="block text-[10px] sm:text-xs font-medium text-zinc-400 uppercase tracking-widest mb-1.5 sm:mb-2">Email</label>
+                    <input type="email" id="auth-email" class="w-full bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-xl sm:rounded-2xl px-4 py-3 sm:py-3 text-sm sm:text-base text-white focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all placeholder:text-zinc-600" placeholder="tu@email.com" required>
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-zinc-400 uppercase tracking-widest mb-2">Contraseña</label>
-                    <input type="password" id="auth-password" class="w-full bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-2xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all placeholder:text-zinc-600" placeholder="••••••••" required>
+                    <label class="block text-[10px] sm:text-xs font-medium text-zinc-400 uppercase tracking-widest mb-1.5 sm:mb-2">Contraseña</label>
+                    <input type="password" id="auth-password" class="w-full bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-xl sm:rounded-2xl px-4 py-3 sm:py-3 text-sm sm:text-base text-white focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all placeholder:text-zinc-600" placeholder="••••••••" required>
                 </div>
-                <button type="submit" id="auth-submit" class="w-full bg-white text-black font-semibold py-3.5 rounded-2xl shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:-translate-y-0.5 transition-all duration-300 flex justify-center items-center gap-2 mt-2">
+                <button type="submit" id="auth-submit" class="w-full bg-white text-black font-semibold py-3 sm:py-3.5 rounded-xl sm:rounded-2xl shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:-translate-y-0.5 transition-all duration-300 flex justify-center items-center gap-2 mt-4 sm:mt-2 text-sm sm:text-base">
                     <span id="auth-submit-text">Continuar</span>
                     <i data-lucide="log-in" class="w-4 h-4"></i>
                 </button>
             </form>
             
-            <div class="mt-8 text-center">
-                <button id="toggle-auth" class="text-sm text-zinc-400 hover:text-white transition-colors">¿No tienes cuenta? <span class="text-indigo-400 font-medium">Regístrate</span></button>
+            <div class="mt-6 sm:mt-8 text-center">
+                <button id="toggle-auth" class="text-xs sm:text-sm text-zinc-400 hover:text-white transition-colors">¿No tienes cuenta? <span class="text-indigo-400 font-medium">Regístrate</span></button>
             </div>
         </div>
     </div>
 
-    <!-- Banner de Cookies (Dark Mode) -->
-    <div id="cookieBanner" class="fixed bottom-0 left-0 w-full bg-zinc-950/90 backdrop-blur-xl border-t border-white/10 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] z-[60] transform translate-y-full transition-transform duration-500 hidden">
-        <div class="max-w-5xl mx-auto p-5 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div class="flex items-start gap-4">
-                <div class="p-2.5 bg-white/5 rounded-xl hidden md:block shrink-0 border border-white/10">
-                    <i data-lucide="cookie" class="w-5 h-5 text-zinc-300"></i>
+    <!-- Banner de Cookies -->
+    <div id="cookieBanner" class="fixed bottom-0 left-0 w-full bg-zinc-950/95 backdrop-blur-xl border-t border-white/10 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] z-[60] transform translate-y-full transition-transform duration-500 hidden">
+        <div class="max-w-5xl 2xl:max-w-7xl mx-auto p-4 sm:p-5 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-start gap-3 sm:gap-4">
+                <div class="p-2 sm:p-2.5 bg-white/5 rounded-xl hidden sm:block shrink-0 border border-white/10">
+                    <i data-lucide="cookie" class="w-4 h-4 sm:w-5 sm:h-5 text-zinc-300"></i>
                 </div>
                 <div>
-                    <h4 class="text-sm font-semibold text-zinc-100">Configuración de Privacidad</h4>
-                    <p class="text-xs text-zinc-400 mt-1 max-w-3xl leading-relaxed">
+                    <h4 class="text-sm font-semibold text-zinc-100 text-center sm:text-left">Configuración de Privacidad</h4>
+                    <p class="text-[10px] sm:text-xs text-zinc-400 mt-1 max-w-3xl leading-relaxed text-center sm:text-left">
                         Utilizamos cookies para garantizar el funcionamiento de los servicios neuronales, mejorar tu experiencia y analizar tráfico. Al aceptar, permites el almacenamiento local de preferencias.
                     </p>
                 </div>
             </div>
-            <div class="flex items-center gap-3 w-full md:w-auto justify-end shrink-0">
-                <button id="rejectCookies" class="px-5 py-2.5 text-xs font-medium text-zinc-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/5 rounded-xl transition-colors whitespace-nowrap">
+            <div class="flex flex-row items-center gap-2 sm:gap-3 w-full md:w-auto justify-center sm:justify-end shrink-0">
+                <button id="rejectCookies" class="flex-1 sm:flex-none px-4 sm:px-5 py-2.5 text-xs font-medium text-zinc-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/5 rounded-xl transition-colors whitespace-nowrap">
                     Rechazar
                 </button>
-                <button id="acceptCookies" class="px-6 py-2.5 text-xs font-medium text-black bg-white hover:bg-zinc-200 shadow-[0_0_20px_rgba(255,255,255,0.2)] rounded-xl transition-all whitespace-nowrap">
+                <button id="acceptCookies" class="flex-1 sm:flex-none px-4 sm:px-6 py-2.5 text-xs font-medium text-black bg-white hover:bg-zinc-200 shadow-[0_0_20px_rgba(255,255,255,0.2)] rounded-xl transition-all whitespace-nowrap">
                     Aceptar todas
                 </button>
             </div>
@@ -287,21 +289,21 @@
     </div>
 
     <!-- Toast de Notificación -->
-    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-zinc-800 text-white px-6 py-3.5 rounded-xl shadow-2xl transition-all duration-400 opacity-0 translate-y-8 pointer-events-none flex items-center gap-3 z-[200] border border-white/10 backdrop-blur-md">
-        <i id="toastIcon" data-lucide="check-circle-2" class="w-4 h-4 text-indigo-400"></i>
-        <span id="toastMsg" class="font-medium text-sm">Copiado</span>
+    <div id="toast" class="fixed bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 bg-zinc-800 text-white px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl shadow-2xl transition-all duration-400 opacity-0 translate-y-8 pointer-events-none flex items-center gap-2 sm:gap-3 z-[200] border border-white/10 backdrop-blur-md w-max max-w-[90vw]">
+        <i id="toastIcon" data-lucide="check-circle-2" class="w-4 h-4 text-indigo-400 shrink-0"></i>
+        <span id="toastMsg" class="font-medium text-xs sm:text-sm">Copiado</span>
     </div>
 
-    <!-- Sistema de Modales (Privacidad, Términos, Contacto) -->
-    <div id="modal-overlay" class="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
-        <div id="modal-container" class="glass-panel w-full max-w-2xl max-h-[85vh] flex flex-col rounded-2xl transform scale-95 opacity-0 transition-all duration-300 shadow-[0_0_50px_rgba(0,0,0,0.5)]">
-            <div class="flex justify-between items-center p-6 border-b border-white/10 bg-white/5">
-                <h3 id="modal-title" class="text-xl font-semibold text-white">Título</h3>
-                <button id="modal-close" class="text-zinc-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/10">
-                    <i data-lucide="x" class="w-5 h-5"></i>
+    <!-- Sistema de Modales (Info) -->
+    <div id="modal-overlay" class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-3 sm:p-4">
+        <div id="modal-container" class="glass-panel w-full max-w-[95%] sm:max-w-2xl max-h-[90vh] flex flex-col rounded-2xl sm:rounded-3xl transform scale-95 opacity-0 transition-all duration-300 shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+            <div class="flex justify-between items-center p-5 sm:p-6 border-b border-white/10 bg-white/5">
+                <h3 id="modal-title" class="text-lg sm:text-xl font-semibold text-white">Título</h3>
+                <button id="modal-close" class="text-zinc-400 hover:text-white transition-colors p-1 sm:p-1.5 rounded-lg hover:bg-white/10">
+                    <i data-lucide="x" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                 </button>
             </div>
-            <div id="modal-content" class="p-6 md:p-8 overflow-y-auto text-zinc-300 text-sm leading-relaxed space-y-6">
+            <div id="modal-content" class="p-5 sm:p-8 overflow-y-auto text-zinc-300 text-xs sm:text-sm leading-relaxed space-y-5 sm:space-y-6">
                 <!-- Contenido Dinámico -->
             </div>
         </div>
@@ -309,65 +311,65 @@
 
     <!-- Contenidos Ocultos Modales -->
     <div id="content-privacidad" class="hidden">
-        <h4 class="text-white font-medium text-base">1. Tecnología Propietaria (Code AI)</h4>
+        <h4 class="text-white font-medium text-sm sm:text-base">1. Tecnología Propietaria (Code AI)</h4>
         <p>Todo el procesamiento de lenguaje natural, análisis de contexto y traducción se realiza a través de <strong>Code AI</strong>, el motor de inteligencia artificial neuronal desarrollado de forma nativa y exclusiva por CodeCompany. Al procesar tus solicitudes dentro de nuestra propia infraestructura, garantizamos la máxima privacidad e independencia tecnológica.</p>
-        <h4 class="text-white font-medium text-base">2. Recopilación y Uso de Datos</h4>
+        <h4 class="text-white font-medium text-sm sm:text-base mt-4">2. Recopilación y Uso de Datos</h4>
         <p>Los textos y comandos de voz que procesas a través de nuestra interfaz son enviados a la API de Code AI únicamente para su traducción en tiempo real. No dependemos de servicios externos, no almacenamos tus conversaciones en bases de datos, no vendemos información y no utilizamos tus datos para el entrenamiento de futuros modelos sin tu consentimiento explícito.</p>
-        <h4 class="text-white font-medium text-base">3. Procesamiento de Voz y Caché Local</h4>
+        <h4 class="text-white font-medium text-sm sm:text-base mt-4">3. Procesamiento de Voz y Caché Local</h4>
         <p>La captura de voz está encriptada de extremo a extremo hacia nuestros servidores. Utilizamos el almacenamiento local de tu navegador (<code>localStorage</code>) estrictamente para guardar tus preferencias de interfaz (como el idioma seleccionado o el consentimiento de cookies) para que tu flujo de trabajo no se interrumpa.</p>
     </div>
 
     <div id="content-terminos" class="hidden">
-        <h4 class="text-white font-medium text-base">1. Uso de Servicios y Límites</h4>
+        <h4 class="text-white font-medium text-sm sm:text-base">1. Uso de Servicios y Límites</h4>
         <p>El servicio de CodeTranslator conecta directamente con los endpoints propietarios de <strong>Code AI</strong>. Su uso gratuito está sujeto a una política de uso justo (Fair Use). CodeCompany se reserva el derecho de restringir el acceso temporalmente en caso de detectar abuso, automatizaciones mediante bots no autorizados o ataques de sobrecarga a nuestra API nativa.</p>
-        <h4 class="text-white font-medium text-base">2. Naturaleza del Servicio y Precisión</h4>
+        <h4 class="text-white font-medium text-sm sm:text-base mt-4">2. Naturaleza del Servicio y Precisión</h4>
         <p>La traducción es generada por modelos probabilísticos de lenguaje de Inteligencia Artificial. Aunque aplicamos instrucciones estrictas de razonamiento lingüístico para obtener resultados de calidad humana, el servicio se provee "tal cual". No ofrecemos garantías absolutas de exactitud, especialmente en contextos médicos o legales críticos.</p>
-        <h4 class="text-white font-medium text-base">3. Restricciones de Uso</h4>
+        <h4 class="text-white font-medium text-sm sm:text-base mt-4">3. Restricciones de Uso</h4>
         <p>Queda estrictamente prohibido usar la herramienta para evadir bloqueos de seguridad, traducir material ilegal, realizar ingeniería inversa a nuestros <i>prompts</i> de sistema, o integrarlo en aplicaciones comerciales de terceros sin un acuerdo de licencia empresarial con CodeCompany Services.</p>
     </div>
 
     <div id="content-contacto" class="hidden">
-        <div class="text-center mb-6">
-            <div class="w-16 h-16 bg-indigo-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-indigo-500/30 shadow-[0_0_30px_rgba(99,102,241,0.15)]">
-                <i data-lucide="mail" class="w-8 h-8 text-indigo-400"></i>
+        <div class="text-center mb-4 sm:mb-6">
+            <div class="w-12 h-12 sm:w-16 sm:h-16 bg-indigo-500/10 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 border border-indigo-500/30 shadow-[0_0_30px_rgba(99,102,241,0.15)]">
+                <i data-lucide="mail" class="w-6 h-6 sm:w-8 sm:h-8 text-indigo-400"></i>
             </div>
-            <p class="text-zinc-400 max-w-md mx-auto">¿Requieres asistencia, licencias empresariales o tienes sugerencias sobre nuestro modelo neuronal? El equipo de CodeCompany está a tu disposición.</p>
+            <p class="text-zinc-400 text-xs sm:text-sm max-w-md mx-auto">¿Requieres asistencia, licencias empresariales o tienes sugerencias sobre nuestro modelo neuronal? El equipo de CodeCompany está a tu disposición.</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-            <a href="mailto:support@codecompany.com" class="flex items-center gap-4 p-4 rounded-xl border border-white/5 bg-zinc-900/50 hover:bg-white/5 transition-all group cursor-pointer">
-                <div class="p-2.5 bg-white/5 rounded-lg group-hover:bg-indigo-500/20 transition-colors">
-                    <i data-lucide="at-sign" class="w-5 h-5 text-indigo-400"></i>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mt-6 sm:mt-8">
+            <a href="mailto:support@codecompany.com" class="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border border-white/5 bg-zinc-900/50 hover:bg-white/5 transition-all group cursor-pointer">
+                <div class="p-2 sm:p-2.5 bg-white/5 rounded-lg group-hover:bg-indigo-500/20 transition-colors">
+                    <i data-lucide="at-sign" class="w-4 h-4 sm:w-5 sm:h-5 text-indigo-400"></i>
                 </div>
                 <div>
-                    <div class="text-white font-medium text-sm">Soporte Técnico</div>
-                    <div class="text-xs text-zinc-500 mt-0.5">support@codecompany.com</div>
+                    <div class="text-white font-medium text-xs sm:text-sm">Soporte Técnico</div>
+                    <div class="text-[10px] sm:text-xs text-zinc-500 mt-0.5 break-all">support@codecompany.com</div>
                 </div>
             </a>
-            <div class="flex items-center gap-4 p-4 rounded-xl border border-white/5 bg-zinc-900/50 hover:bg-white/5 transition-all group cursor-pointer">
-                <div class="p-2.5 bg-white/5 rounded-lg group-hover:bg-purple-500/20 transition-colors">
-                    <i data-lucide="globe" class="w-5 h-5 text-purple-400"></i>
+            <div class="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border border-white/5 bg-zinc-900/50 hover:bg-white/5 transition-all group cursor-pointer">
+                <div class="p-2 sm:p-2.5 bg-white/5 rounded-lg group-hover:bg-purple-500/20 transition-colors">
+                    <i data-lucide="globe" class="w-4 h-4 sm:w-5 sm:h-5 text-purple-400"></i>
                 </div>
                 <div>
-                    <div class="text-white font-medium text-sm">Sitio Empresarial</div>
-                    <div class="text-xs text-zinc-500 mt-0.5">www.codecompany.com</div>
+                    <div class="text-white font-medium text-xs sm:text-sm">Sitio Empresarial</div>
+                    <div class="text-[10px] sm:text-xs text-zinc-500 mt-0.5 break-all">www.codecompany.com</div>
                 </div>
             </div>
-            <div class="flex items-center gap-4 p-4 rounded-xl border border-white/5 bg-zinc-900/50 hover:bg-white/5 transition-all group cursor-pointer">
-                <div class="p-2.5 bg-white/5 rounded-lg group-hover:bg-blue-500/20 transition-colors">
-                    <i data-lucide="twitter" class="w-5 h-5 text-blue-400"></i>
+            <div class="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border border-white/5 bg-zinc-900/50 hover:bg-white/5 transition-all group cursor-pointer">
+                <div class="p-2 sm:p-2.5 bg-white/5 rounded-lg group-hover:bg-blue-500/20 transition-colors">
+                    <i data-lucide="twitter" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400"></i>
                 </div>
                 <div>
-                    <div class="text-white font-medium text-sm">X (Twitter)</div>
-                    <div class="text-xs text-zinc-500 mt-0.5">@CodeCompanyAI</div>
+                    <div class="text-white font-medium text-xs sm:text-sm">X (Twitter)</div>
+                    <div class="text-[10px] sm:text-xs text-zinc-500 mt-0.5 break-all">@CodeCompanyAI</div>
                 </div>
             </div>
-            <div class="flex items-center gap-4 p-4 rounded-xl border border-white/5 bg-zinc-900/50 hover:bg-white/5 transition-all group cursor-pointer">
-                <div class="p-2.5 bg-white/5 rounded-lg group-hover:bg-emerald-500/20 transition-colors">
-                    <i data-lucide="map-pin" class="w-5 h-5 text-emerald-400"></i>
+            <div class="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border border-white/5 bg-zinc-900/50 hover:bg-white/5 transition-all group cursor-pointer">
+                <div class="p-2 sm:p-2.5 bg-white/5 rounded-lg group-hover:bg-emerald-500/20 transition-colors">
+                    <i data-lucide="map-pin" class="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400"></i>
                 </div>
                 <div>
-                    <div class="text-white font-medium text-sm">Centro de Datos</div>
-                    <div class="text-xs text-zinc-500 mt-0.5">Ciudad de México, MX</div>
+                    <div class="text-white font-medium text-xs sm:text-sm">Centro de Datos</div>
+                    <div class="text-[10px] sm:text-xs text-zinc-500 mt-0.5 break-all">Ciudad de México, MX</div>
                 </div>
             </div>
         </div>
@@ -409,7 +411,7 @@
         // Función global de Toast actualizada
         function showToast(message, iconName) {
             const toast = document.getElementById('toast');
-            toast.innerHTML = `<i data-lucide="${iconName}" class="w-4 h-4 text-indigo-400"></i> <span id="toastMsg" class="font-medium text-sm">${message}</span>`;
+            toast.innerHTML = `<i data-lucide="${iconName}" class="w-4 h-4 text-indigo-400 shrink-0"></i> <span id="toastMsg" class="font-medium text-xs sm:text-sm">${message}</span>`;
             lucide.createIcons();
             toast.classList.remove('opacity-0', 'translate-y-8', 'pointer-events-none');
             setTimeout(() => {
@@ -428,7 +430,7 @@
             }
         }
 
-        // Click en el botón de usuario superior izquierdo
+        // Click en el botón de usuario superior
         btnUserAuth.addEventListener('click', async () => {
             if (currentUser) {
                 // Si está logueado, el botón funciona para cerrar sesión
@@ -504,30 +506,60 @@
             }
         });
 
-        // Escuchar el Estado de Autenticación
-        supabaseClient.auth.onAuthStateChange(async (event, session) => {
-            currentUser = session?.user || null;
-            if (currentUser) {
-                // Obtener el perfil del usuario desde la tabla 'perfiles'
-                const { data: perfil } = await supabaseClient
-                    .from('perfiles')
-                    .select('nombre')
-                    .eq('id', currentUser.id)
-                    .single();
+        // Caché local para el perfil (optimización de red)
+        let userProfileCache = null;
 
-                const displayName = perfil?.nombre || currentUser.email.split('@')[0];
+        // Función optimizada para actualizar la UI del usuario
+        async function updateUserUI(user) {
+            if (user) {
+                let displayName = user.email.split('@')[0];
+                
+                // Si no tenemos el perfil en caché, lo consultamos a Supabase
+                if (!userProfileCache || userProfileCache.id !== user.id) {
+                    try {
+                        const { data: perfil } = await supabaseClient
+                            .from('perfiles')
+                            .select('nombre')
+                            .eq('id', user.id)
+                            .single();
+                        
+                        if (perfil) {
+                            userProfileCache = { id: user.id, nombre: perfil.nombre };
+                            displayName = perfil.nombre || displayName;
+                        }
+                    } catch (error) {
+                        console.warn("No se pudo obtener el perfil de la base de datos", error);
+                    }
+                } else {
+                    // Usar caché si ya lo buscamos antes
+                    displayName = userProfileCache.nombre || displayName;
+                }
                 
                 userAuthText.textContent = `Cerrar sesión (${displayName})`;
                 userAuthIcon.setAttribute('data-lucide', 'log-out');
                 btnUserAuth.classList.add('bg-indigo-500/10', 'border-indigo-500/30', 'text-indigo-300');
                 btnUserAuth.classList.remove('bg-white/5', 'border-white/10', 'text-zinc-300');
             } else {
+                userProfileCache = null; // Limpiar caché al cerrar sesión
                 userAuthText.textContent = "Iniciar Sesión";
                 userAuthIcon.setAttribute('data-lucide', 'user');
                 btnUserAuth.classList.remove('bg-indigo-500/10', 'border-indigo-500/30', 'text-indigo-300');
                 btnUserAuth.classList.add('bg-white/5', 'border-white/10', 'text-zinc-300');
             }
             lucide.createIcons();
+        }
+
+        // 1. SISTEMA DE DETECCIÓN DE SESIÓN INICIAL (Persistencia Inmediata)
+        supabaseClient.auth.getSession().then(({ data: { session } }) => {
+            currentUser = session?.user || null;
+            updateUserUI(currentUser);
+        });
+
+        // 2. ESCUCHAR CAMBIOS DE ESTADO
+        supabaseClient.auth.onAuthStateChange(async (event, session) => {
+            if (event === 'INITIAL_SESSION') return; 
+            currentUser = session?.user || null;
+            updateUserUI(currentUser);
         });
 
 
