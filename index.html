@@ -12,6 +12,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -98,28 +101,33 @@
             to { transform: translateY(0); }
         }
 
-        /* Ocultar el icono de dropdown nativo en selectores */
         select { -webkit-appearance: none; -moz-appearance: none; appearance: none; }
         select option { background-color: #18181b; color: #fff; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 font-sans tracking-tight relative overflow-x-hidden selection:bg-indigo-500/30">
 
-    <!-- Efecto Aurora de Fondo (AI Vibe) -->
+    <!-- Efecto Aurora de Fondo -->
     <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-indigo-600/20 mix-blend-screen filter blur-[100px] opacity-70 animate-blob"></div>
         <div class="absolute top-[20%] right-[-10%] w-[400px] h-[400px] rounded-full bg-purple-600/20 mix-blend-screen filter blur-[100px] opacity-60 animate-blob" style="animation-delay: 2s;"></div>
         <div class="absolute bottom-[-20%] left-[20%] w-[600px] h-[600px] rounded-full bg-blue-600/10 mix-blend-screen filter blur-[120px] opacity-50 animate-blob" style="animation-delay: 4s;"></div>
-        <!-- Grid overlay muy sutil -->
         <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wMykiLz48L3N2Zz4=')] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_80%)]"></div>
     </div>
 
+    <!-- Botón de Usuario (Top Left) -->
+    <div class="absolute top-6 left-6 lg:left-8 z-20">
+        <button id="btn-user-auth" class="flex items-center gap-2 text-zinc-300 bg-white/5 px-4 py-2 rounded-full border border-white/10 text-xs font-medium tracking-wide shadow-sm backdrop-blur-md hover:bg-white/10 transition-all group">
+            <i id="user-auth-icon" data-lucide="user" class="w-3.5 h-3.5 text-indigo-400 group-hover:scale-110 transition-transform"></i>
+            <span id="user-auth-text">Iniciar Sesión</span>
+        </button>
+    </div>
+
     <!-- Contenedor Principal -->
-    <div class="max-w-5xl w-full glass-panel rounded-[2rem] overflow-hidden relative z-10 animate-fade-in-up flex flex-col">
+    <div class="max-w-5xl w-full glass-panel rounded-[2rem] overflow-hidden relative z-10 animate-fade-in-up flex flex-col mt-12 md:mt-0">
         
-        <!-- Encabezado Premium Oscuro -->
+        <!-- Encabezado Premium -->
         <div class="relative p-8 md:p-10 flex flex-col items-center justify-center border-b border-white/5 overflow-hidden">
-            <!-- Glow sutil detrás del título -->
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-32 bg-indigo-500/20 blur-[50px] rounded-full pointer-events-none"></div>
 
             <div class="absolute top-6 right-6 lg:right-8 flex items-center gap-2 text-zinc-300 bg-white/5 px-4 py-1.5 rounded-full border border-white/10 text-[10px] font-semibold tracking-[0.2em] uppercase shadow-sm backdrop-blur-md">
@@ -139,12 +147,10 @@
         </div>
 
         <div class="p-6 md:p-10 flex flex-col gap-8 relative z-20 flex-grow">
-            
             <!-- Controles de Idioma -->
             <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-white/5 pb-8">
                 <div class="w-full md:w-5/12 relative group">
-                    <select id="sourceLang" class="w-full bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-2xl px-5 py-4 text-zinc-200 font-medium focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all cursor-pointer hover:bg-zinc-800/50">
-                    </select>
+                    <select id="sourceLang" class="w-full bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-2xl px-5 py-4 text-zinc-200 font-medium focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all cursor-pointer hover:bg-zinc-800/50"></select>
                     <i data-lucide="chevron-down" class="w-4 h-4 absolute right-5 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none group-hover:text-zinc-300 transition-colors"></i>
                 </div>
 
@@ -153,16 +159,13 @@
                 </button>
 
                 <div class="w-full md:w-5/12 relative group">
-                    <select id="targetLang" class="w-full bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-2xl px-5 py-4 text-zinc-200 font-medium focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all cursor-pointer hover:bg-zinc-800/50">
-                    </select>
+                    <select id="targetLang" class="w-full bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-2xl px-5 py-4 text-zinc-200 font-medium focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all cursor-pointer hover:bg-zinc-800/50"></select>
                     <i data-lucide="chevron-down" class="w-4 h-4 absolute right-5 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none group-hover:text-zinc-300 transition-colors"></i>
                 </div>
             </div>
 
             <!-- Áreas de Texto -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 relative">
-                
-                <!-- Separador visual -->
                 <div class="hidden md:block absolute left-1/2 top-4 bottom-4 w-[1px] bg-gradient-to-b from-transparent via-white/10 to-transparent -translate-x-1/2 pointer-events-none"></div>
 
                 <!-- Área de Origen -->
@@ -176,7 +179,6 @@
                     <div class="absolute bottom-6 right-6 flex items-center gap-3">
                         <span class="text-xs text-zinc-500 font-medium mr-2 tracking-wide"><span id="charCount">0</span> ch</span>
                         
-                        <!-- Modo Intérprete IA Vivo -->
                         <button id="liveBtn" class="bg-zinc-800/80 backdrop-blur p-3 rounded-xl shadow-lg border border-white/5 text-zinc-400 hover:text-white hover:border-indigo-500/50 hover:shadow-indigo-500/20 transition-all duration-300 focus:outline-none flex items-center gap-2" title="Intérprete IA en Vivo">
                             <i id="liveIcon" data-lucide="radio" class="w-4 h-4 transition-colors"></i>
                             <span id="liveText" class="text-xs font-semibold hidden sm:block tracking-wide">Vivo</span>
@@ -190,9 +192,7 @@
 
                 <!-- Área de Destino -->
                 <div class="relative group h-full">
-                    <!-- Overlay para estado readonly -->
                     <div class="absolute inset-0 bg-zinc-950/40 rounded-3xl pointer-events-none border border-white/5"></div>
-                    
                     <textarea id="targetText" rows="7" readonly class="w-full h-full bg-transparent border border-transparent rounded-3xl p-6 md:p-8 text-lg md:text-xl text-zinc-300 placeholder:text-zinc-600 focus:outline-none leading-relaxed relative z-10" placeholder="La traducción aparecerá aquí..."></textarea>
                     
                     <div class="absolute bottom-6 right-6 flex gap-2 z-20">
@@ -215,7 +215,6 @@
                     <i id="btnIcon" data-lucide="arrow-right" class="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300"></i>
                 </button>
             </div>
-
         </div>
     </div>
 
@@ -228,6 +227,39 @@
             <a href="#contacto" id="btn-contacto" class="hover:text-zinc-300 transition-colors duration-300">Contacto</a>
         </div>
     </footer>
+
+    <!-- Modal de Login/Registro de Supabase -->
+    <div id="login-modal" class="fixed inset-0 z-[150] bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
+        <div id="login-container" class="glass-panel w-full max-w-md p-8 rounded-[2rem] border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] transform scale-95 opacity-0 transition-all duration-300">
+            <div class="flex justify-between items-center mb-6">
+                <h2 id="auth-title" class="text-2xl font-semibold text-white tracking-tight">Acceso Code AI</h2>
+                <button id="close-login" class="text-zinc-400 hover:text-white p-1.5 rounded-lg hover:bg-white/10 transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            
+            <form id="auth-form" class="space-y-4">
+                <div id="auth-name-group" class="hidden">
+                    <label class="block text-xs font-medium text-zinc-400 uppercase tracking-widest mb-2">Nombre</label>
+                    <input type="text" id="auth-name" class="w-full bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-2xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all placeholder:text-zinc-600" placeholder="Tu nombre completo">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-zinc-400 uppercase tracking-widest mb-2">Email</label>
+                    <input type="email" id="auth-email" class="w-full bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-2xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all placeholder:text-zinc-600" placeholder="tu@email.com" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-zinc-400 uppercase tracking-widest mb-2">Contraseña</label>
+                    <input type="password" id="auth-password" class="w-full bg-zinc-900/50 backdrop-blur-sm border border-white/10 rounded-2xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all placeholder:text-zinc-600" placeholder="••••••••" required>
+                </div>
+                <button type="submit" id="auth-submit" class="w-full bg-white text-black font-semibold py-3.5 rounded-2xl shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:-translate-y-0.5 transition-all duration-300 flex justify-center items-center gap-2 mt-2">
+                    <span id="auth-submit-text">Continuar</span>
+                    <i data-lucide="log-in" class="w-4 h-4"></i>
+                </button>
+            </form>
+            
+            <div class="mt-8 text-center">
+                <button id="toggle-auth" class="text-sm text-zinc-400 hover:text-white transition-colors">¿No tienes cuenta? <span class="text-indigo-400 font-medium">Regístrate</span></button>
+            </div>
+        </div>
+    </div>
 
     <!-- Banner de Cookies (Dark Mode) -->
     <div id="cookieBanner" class="fixed bottom-0 left-0 w-full bg-zinc-950/90 backdrop-blur-xl border-t border-white/10 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] z-[60] transform translate-y-full transition-transform duration-500 hidden">
@@ -255,7 +287,7 @@
     </div>
 
     <!-- Toast de Notificación -->
-    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-zinc-800 text-white px-6 py-3.5 rounded-xl shadow-2xl transition-all duration-400 opacity-0 translate-y-8 pointer-events-none flex items-center gap-3 z-50 border border-white/10 backdrop-blur-md">
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-zinc-800 text-white px-6 py-3.5 rounded-xl shadow-2xl transition-all duration-400 opacity-0 translate-y-8 pointer-events-none flex items-center gap-3 z-[200] border border-white/10 backdrop-blur-md">
         <i id="toastIcon" data-lucide="check-circle-2" class="w-4 h-4 text-indigo-400"></i>
         <span id="toastMsg" class="font-medium text-sm">Copiado</span>
     </div>
@@ -275,7 +307,7 @@
         </div>
     </div>
 
-    <!-- Contenido Oculto: Privacidad -->
+    <!-- Contenidos Ocultos Modales -->
     <div id="content-privacidad" class="hidden">
         <h4 class="text-white font-medium text-base">1. Tecnología Propietaria (Code AI)</h4>
         <p>Todo el procesamiento de lenguaje natural, análisis de contexto y traducción se realiza a través de <strong>Code AI</strong>, el motor de inteligencia artificial neuronal desarrollado de forma nativa y exclusiva por CodeCompany. Al procesar tus solicitudes dentro de nuestra propia infraestructura, garantizamos la máxima privacidad e independencia tecnológica.</p>
@@ -285,7 +317,6 @@
         <p>La captura de voz está encriptada de extremo a extremo hacia nuestros servidores. Utilizamos el almacenamiento local de tu navegador (<code>localStorage</code>) estrictamente para guardar tus preferencias de interfaz (como el idioma seleccionado o el consentimiento de cookies) para que tu flujo de trabajo no se interrumpa.</p>
     </div>
 
-    <!-- Contenido Oculto: Términos -->
     <div id="content-terminos" class="hidden">
         <h4 class="text-white font-medium text-base">1. Uso de Servicios y Límites</h4>
         <p>El servicio de CodeTranslator conecta directamente con los endpoints propietarios de <strong>Code AI</strong>. Su uso gratuito está sujeto a una política de uso justo (Fair Use). CodeCompany se reserva el derecho de restringir el acceso temporalmente en caso de detectar abuso, automatizaciones mediante bots no autorizados o ataques de sobrecarga a nuestra API nativa.</p>
@@ -295,7 +326,6 @@
         <p>Queda estrictamente prohibido usar la herramienta para evadir bloqueos de seguridad, traducir material ilegal, realizar ingeniería inversa a nuestros <i>prompts</i> de sistema, o integrarlo en aplicaciones comerciales de terceros sin un acuerdo de licencia empresarial con CodeCompany Services.</p>
     </div>
 
-    <!-- Contenido Oculto: Contacto -->
     <div id="content-contacto" class="hidden">
         <div class="text-center mb-6">
             <div class="w-16 h-16 bg-indigo-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-indigo-500/30 shadow-[0_0_30px_rgba(99,102,241,0.15)]">
@@ -346,7 +376,164 @@
     <script>
         lucide.createIcons();
 
-        // DOM Elements
+        /* =========================================
+           CONFIGURACIÓN SUPABASE
+           ========================================= */
+        const supabaseUrl = 'https://cidhaaqtenidupftruvm.supabase.co';
+        const supabaseKey = 'sb_publishable_VO_mKTOnWA8Kiyr6UaLPrQ_rjvz0xgZ';
+        // Usamos 'supabaseClient' porque el CDN ya declara 'supabase' en el ámbito global
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        /* =========================================
+           LÓGICA DE AUTENTICACIÓN
+           ========================================= */
+        let isSignUp = false;
+        let currentUser = null;
+
+        const btnUserAuth = document.getElementById('btn-user-auth');
+        const userAuthText = document.getElementById('user-auth-text');
+        const userAuthIcon = document.getElementById('user-auth-icon');
+        
+        const loginModal = document.getElementById('login-modal');
+        const loginContainer = document.getElementById('login-container');
+        const closeLoginBtn = document.getElementById('close-login');
+        
+        const authForm = document.getElementById('auth-form');
+        const authTitle = document.getElementById('auth-title');
+        const authSubmitText = document.getElementById('auth-submit-text');
+        const toggleAuthBtn = document.getElementById('toggle-auth');
+
+        const authNameGroup = document.getElementById('auth-name-group');
+        const authName = document.getElementById('auth-name');
+
+        // Función global de Toast actualizada
+        function showToast(message, iconName) {
+            const toast = document.getElementById('toast');
+            toast.innerHTML = `<i data-lucide="${iconName}" class="w-4 h-4 text-indigo-400"></i> <span id="toastMsg" class="font-medium text-sm">${message}</span>`;
+            lucide.createIcons();
+            toast.classList.remove('opacity-0', 'translate-y-8', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-8', 'pointer-events-none');
+            }, 3000);
+        }
+
+        // Abrir/Cerrar Modal de Login
+        function toggleLoginModal(show) {
+            if (show) {
+                loginModal.classList.remove('opacity-0', 'pointer-events-none');
+                loginContainer.classList.remove('scale-95', 'opacity-0');
+            } else {
+                loginModal.classList.add('opacity-0', 'pointer-events-none');
+                loginContainer.classList.add('scale-95', 'opacity-0');
+            }
+        }
+
+        // Click en el botón de usuario superior izquierdo
+        btnUserAuth.addEventListener('click', async () => {
+            if (currentUser) {
+                // Si está logueado, el botón funciona para cerrar sesión
+                await supabaseClient.auth.signOut();
+                showToast("Sesión cerrada correctamente", "log-out");
+            } else {
+                // Si no, abre el modal
+                toggleLoginModal(true);
+            }
+        });
+
+        closeLoginBtn.addEventListener('click', () => toggleLoginModal(false));
+        loginModal.addEventListener('click', (e) => {
+            if(e.target === loginModal) toggleLoginModal(false);
+        });
+
+        // Alternar entre Iniciar Sesión y Registro
+        toggleAuthBtn.addEventListener('click', () => {
+            isSignUp = !isSignUp;
+            authTitle.textContent = isSignUp ? "Crear Cuenta" : "Acceso Code AI";
+            authSubmitText.textContent = isSignUp ? "Registrarse" : "Continuar";
+            
+            if (isSignUp) {
+                authNameGroup.classList.remove('hidden');
+                authName.required = true;
+            } else {
+                authNameGroup.classList.add('hidden');
+                authName.required = false;
+            }
+
+            toggleAuthBtn.innerHTML = isSignUp 
+                ? '¿Ya tienes cuenta? <span class="text-indigo-400 font-medium">Inicia sesión</span>' 
+                : '¿No tienes cuenta? <span class="text-indigo-400 font-medium">Regístrate</span>';
+        });
+
+        // Enviar Formulario (Email / Password)
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+            const btn = document.getElementById('auth-submit');
+
+            btn.disabled = true;
+            btn.innerHTML = '<div class="loader border-black border-t-black !block"></div>';
+
+            try {
+                let result;
+                if (isSignUp) {
+                    const nombre = authName.value;
+                    result = await supabaseClient.auth.signUp({ 
+                        email, 
+                        password,
+                        options: {
+                            data: {
+                                nombre: nombre
+                            }
+                        }
+                    });
+                    if (result.error) throw result.error;
+                    showToast("Verifica tu email para confirmar", "mail");
+                } else {
+                    result = await supabaseClient.auth.signInWithPassword({ email, password });
+                    if (result.error) throw result.error;
+                    showToast("Bienvenido de nuevo", "check-circle-2");
+                    toggleLoginModal(false);
+                }
+            } catch (error) {
+                showToast(error.message, "alert-circle");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<span id="auth-submit-text">${isSignUp ? 'Registrarse' : 'Continuar'}</span><i data-lucide="log-in" class="w-4 h-4"></i>`;
+                lucide.createIcons();
+            }
+        });
+
+        // Escuchar el Estado de Autenticación
+        supabaseClient.auth.onAuthStateChange(async (event, session) => {
+            currentUser = session?.user || null;
+            if (currentUser) {
+                // Obtener el perfil del usuario desde la tabla 'perfiles'
+                const { data: perfil } = await supabaseClient
+                    .from('perfiles')
+                    .select('nombre')
+                    .eq('id', currentUser.id)
+                    .single();
+
+                const displayName = perfil?.nombre || currentUser.email.split('@')[0];
+                
+                userAuthText.textContent = `Cerrar sesión (${displayName})`;
+                userAuthIcon.setAttribute('data-lucide', 'log-out');
+                btnUserAuth.classList.add('bg-indigo-500/10', 'border-indigo-500/30', 'text-indigo-300');
+                btnUserAuth.classList.remove('bg-white/5', 'border-white/10', 'text-zinc-300');
+            } else {
+                userAuthText.textContent = "Iniciar Sesión";
+                userAuthIcon.setAttribute('data-lucide', 'user');
+                btnUserAuth.classList.remove('bg-indigo-500/10', 'border-indigo-500/30', 'text-indigo-300');
+                btnUserAuth.classList.add('bg-white/5', 'border-white/10', 'text-zinc-300');
+            }
+            lucide.createIcons();
+        });
+
+
+        /* =========================================
+           LÓGICA ANTERIOR (Traductor, Ui, Modales)
+           ========================================= */
         const sourceLang = document.getElementById('sourceLang');
         const targetLang = document.getElementById('targetLang');
         const sourceText = document.getElementById('sourceText');
@@ -499,7 +686,6 @@
             btnIcon.style.display = "none";
             btnLoader.style.display = "block";
             
-            // Efecto visual de análisis en el área de destino
             targetText.value = "";
             targetText.classList.add('animate-pulse', 'bg-white/5');
             
@@ -543,16 +729,6 @@
             }
             document.body.removeChild(tempTextArea);
         });
-
-        function showToast(message, iconName) {
-            const toast = document.getElementById('toast');
-            toast.innerHTML = `<i data-lucide="${iconName}" class="w-4 h-4 text-indigo-400"></i> <span id="toastMsg" class="font-medium text-sm">${message}</span>`;
-            lucide.createIcons();
-            toast.classList.remove('opacity-0', 'translate-y-8', 'pointer-events-none');
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'translate-y-8', 'pointer-events-none');
-            }, 2500);
-        }
 
         populateSelects();
 
@@ -750,7 +926,7 @@
             modalOverlay.classList.remove('opacity-0', 'pointer-events-none');
             modalContainer.classList.remove('scale-95', 'opacity-0');
             modalContainer.classList.add('scale-100', 'opacity-100');
-            lucide.createIcons(); // Renderizar iconos dentro del modal dinámico
+            lucide.createIcons();
         }
 
         function closeModal() {
